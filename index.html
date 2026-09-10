@@ -146,4 +146,368 @@
       z-index: 4;
       top: 99px;
       left: 97px;
-      width:
+      width: 87px;
+      height: 9px;
+      border-radius: 30px;
+      background: rgba(137, 51, 12, 0.38);
+      transform: rotate(-2deg);
+    }
+
+    .fortune-paper {
+      position: absolute;
+      z-index: 1;
+      top: 76px;
+      left: 89px;
+      width: 103px;
+      height: 91px;
+      opacity: 1;
+      background: linear-gradient(145deg, #fffef8, #fff4d8);
+      box-shadow: 0 5px 7px rgba(75, 45, 20, 0.18);
+      clip-path: polygon(13% 0, 100% 10%, 91% 100%, 0 88%);
+      transform: rotate(5deg);
+    }
+
+    .fortune-paper::after {
+      content: "";
+      position: absolute;
+      top: 29px;
+      left: 13px;
+      right: 13px;
+      border-top: 2px solid #e9cc95;
+    }
+
+    .spark {
+      position: absolute;
+      z-index: 6;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      opacity: 0;
+      background: var(--gold);
+    }
+
+    .spark-1 { top: 30px; left: 39px; --x: -38px; --y: -42px; }
+    .spark-2 { top: 44px; right: 35px; --x: 38px; --y: -35px; }
+    .spark-3 { bottom: 22px; left: 67px; --x: -34px; --y: 29px; }
+    .spark-4 { bottom: 22px; right: 67px; --x: 34px; --y: 29px; }
+
+    .fortune-button.open .cookie-left {
+      animation: open-left 720ms cubic-bezier(.17,.9,.28,1) forwards;
+    }
+
+    .fortune-button.open .cookie-right {
+      animation: open-right 720ms cubic-bezier(.17,.9,.28,1) forwards;
+    }
+
+    .fortune-button.open .cookie-crease {
+      opacity: 0;
+      transition: opacity 180ms ease;
+    }
+
+    .fortune-button.open .fortune-paper {
+      animation: paper-rise 700ms 130ms cubic-bezier(.2,.9,.2,1) forwards;
+    }
+
+    .fortune-button.open .spark {
+      animation: sparkle 700ms ease-out forwards;
+    }
+
+    .fortune-button.open .spark-2 { animation-delay: 80ms; }
+    .fortune-button.open .spark-3 { animation-delay: 140ms; }
+    .fortune-button.open .spark-4 { animation-delay: 110ms; }
+
+    .fortune-card {
+      display: none;
+      max-width: 490px;
+      margin: 0 auto 18px;
+      padding: 26px 24px;
+      border: 1px solid var(--line);
+      border-radius: 23px;
+      background: rgba(255, 253, 246, 0.88);
+      box-shadow: 0 18px 36px rgba(104, 57, 21, 0.13);
+      backdrop-filter: blur(10px);
+    }
+
+    .fortune-card.show {
+      display: block;
+      animation: card-rise 460ms ease both;
+    }
+
+    .eyebrow {
+      color: #bc6a29;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .fortune-message {
+      margin: 12px 0 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(25px, 5vw, 33px);
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.04em;
+    }
+
+    .status {
+      min-height: 24px;
+      color: #896346;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .next-fortune {
+      min-height: 22px;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer {
+      margin-top: 23px;
+      color: #a1846b;
+      font-size: 12px;
+    }
+
+    .footer span {
+      color: #e5862c;
+    }
+
+    @keyframes open-left {
+      to {
+        transform: translate(-76px, -25px) rotate(-28deg);
+      }
+    }
+
+    @keyframes open-right {
+      to {
+        transform: translate(76px, -25px) rotate(28deg);
+      }
+    }
+
+    @keyframes paper-rise {
+      from {
+        opacity: 0;
+        transform: rotate(5deg) scale(0.62);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(-54px) rotate(-4deg) scale(1);
+      }
+    }
+
+    @keyframes sparkle {
+      20% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--x), var(--y)) scale(0.2);
+      }
+    }
+
+    @keyframes card-rise {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      Positive Fortune
+    </div>
+
+    <h1>A little good news<br />for your day.</h1>
+
+    <p class="intro">
+      One gentle reminder, made just for today.
+      Crack open your cookie when you are ready.
+    </p>
+
+    <div class="cookie-stage">
+      <button
+        id="fortuneButton"
+        class="fortune-button"
+        aria-label="Open today’s positive fortune"
+      >
+        <span class="fortune-paper" aria-hidden="true"></span>
+        <span class="cookie-half cookie-left" aria-hidden="true"></span>
+        <span class="cookie-half cookie-right" aria-hidden="true"></span>
+        <span class="cookie-crease" aria-hidden="true"></span>
+
+        <span class="spark spark-1" aria-hidden="true"></span>
+        <span class="spark spark-2" aria-hidden="true"></span>
+        <span class="spark spark-3" aria-hidden="true"></span>
+        <span class="spark spark-4" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <section id="fortuneCard" class="fortune-card" aria-live="polite">
+      <div class="eyebrow">Your fortune for today</div>
+      <p id="fortuneMessage" class="fortune-message"></p>
+    </section>
+
+    <div id="status" class="status">Your next fortune is waiting.</div>
+    <div id="nextFortune" class="next-fortune">One fortune, once a day.</div>
+
+    <div class="footer">
+      Made to brighten one moment. <span>✦</span>
+    </div>
+  </main>
+
+  <script>
+    const fortunes = [
+      "You are making more progress than you can see.",
+      "Small steps still carry you somewhere beautiful.",
+      "Your kindness leaves a bigger mark than you know.",
+      "Today has room for one unexpected good thing.",
+      "You already have something worth celebrating.",
+      "Your future self is grateful you kept going.",
+      "You are allowed to take up space and feel proud.",
+      "A calm mind can turn an ordinary day into a good one.",
+      "The right timing sometimes begins with one brave try.",
+      "You bring a perspective no one else can replace.",
+      "Your effort matters, even before anyone notices it.",
+      "Trust the part of you that keeps choosing hope.",
+      "Good things can grow quietly before they become visible.",
+      "You do not need to be perfect to be powerful.",
+      "A fresh start can happen in the middle of any day.",
+      "You are closer to a breakthrough than yesterday.",
+      "There is more ease ahead than you can imagine today.",
+      "Let your next choice be a vote of confidence in yourself.",
+      "Your story is still unfolding in your favor.",
+      "You deserve the good energy you give away.",
+      "One thoughtful action today will make tomorrow lighter.",
+      "Your presence makes someone’s world warmer.",
+      "The best part of today may still be on its way.",
+      "You have handled hard things; this day is not too much for you.",
+      "The courage you need often arrives after you begin.",
+      "You are growing into someone you will be proud to know.",
+      "Joy is not behind schedule; it can meet you here.",
+      "Your ideas deserve a little more trust today.",
+      "Peace can start with a single deep breath and a kind thought.",
+      "What feels slow may actually be taking root.",
+      "You are allowed to be both a work in progress and wonderful."
+    ];
+
+    const storageKey = "positive-fortune-daily-v1";
+
+    const fortuneButton = document.getElementById("fortuneButton");
+    const fortuneCard = document.getElementById("fortuneCard");
+    const fortuneMessage = document.getElementById("fortuneMessage");
+    const status = document.getElementById("status");
+    const nextFortune = document.getElementById("nextFortune");
+
+    function getToday() {
+      return new Date().toLocaleDateString("en-CA");
+    }
+
+    function getTomorrow() {
+      const tomorrow = new Date();
+      tomorrow.setHours(24, 0, 0, 0);
+      return tomorrow;
+    }
+
+    function formatTimeUntilTomorrow() {
+      const milliseconds = getTomorrow() - new Date();
+      const totalMinutes = Math.max(0, Math.ceil(milliseconds / 60000));
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+
+      if (hours > 0) {
+        return `${hours}h ${minutes}m until tomorrow`;
+      }
+
+      return `${minutes}m until tomorrow`;
+    }
+
+    function chooseDailyFortune(seed) {
+      let hash = 0;
+
+      for (let i = 0; i < seed.length; i++) {
+        hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+        hash |= 0;
+      }
+
+      const index = Math.abs(hash) % fortunes.length;
+      return fortunes[index];
+    }
+
+    function getSavedFortune() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey));
+      } catch {
+        return null;
+      }
+    }
+
+    function saveFortune(text) {
+      try {
+        localStorage.setItem(
+          storageKey,
+          JSON.stringify({
+            date: getToday(),
+            message: text
+          })
+        );
+      } catch {
+        // The site still works if browser storage is unavailable.
+      }
+    }
+
+    function revealFortune(message) {
+      fortuneButton.classList.add("open");
+      fortuneButton.disabled = true;
+
+      fortuneMessage.textContent = `“${message}”`;
+      fortuneCard.classList.add("show");
+
+      status.textContent = "Come back tomorrow for another bright thought.";
+      nextFortune.textContent = formatTimeUntilTomorrow();
+    }
+
+    function loadDailyFortune() {
+      const saved = getSavedFortune();
+
+      if (saved && saved.date === getToday() && saved.message) {
+        revealFortune(saved.message);
+      }
+    }
+
+    fortuneButton.addEventListener("click", () => {
+      const message = chooseDailyFortune(getToday());
+      saveFortune(message);
+      revealFortune(message);
+    });
+
+    setInterval(() => {
+      const saved = getSavedFortune();
+
+      if (saved && saved.date === getToday()) {
+        nextFortune.textContent = formatTimeUntilTomorrow();
+      }
+    }, 30000);
+
+    loadDailyFortune();
+  </script>
+</body>
+</html>
